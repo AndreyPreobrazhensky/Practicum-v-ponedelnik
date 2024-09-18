@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
-double pi = 0.0;
-
 
 struct timeval tv1,tv2,dtv;
 
@@ -25,25 +23,25 @@ long time_stop()
   return dtv.tv_sec*1000+dtv.tv_usec/1000;
 
 }
-double f(double x){
-	return 4.0 / (1.0 + x * x);
-}
 void *th_func(void *arg){
-	int k, j, *as = (int*)arg;
+	int k, j, *as = (int*)arg, kol_vo;
         printf("%d %d %d\n", as[0], as[1], as[2]);	
-	double ch, pil = 0;
+	double ch, x, pil = 0, *result = (double*)as;
 	ch = 1.0 / (double)as[1];
 	k = (int)(as[1] / as[2]);
-	for (j = k * as[0]; j < k * (as[0] + 1); j++){
-		pil += ch * f(j * ch);
+	kol_vo = k * (as[0] + 1);
+	for (j = k * as[0]; j < kol_vo; j++){
+		x = j * ch;
+		pil += ch * (4.0 / (1.0 + x * x));
 	}
-	pi += pil;
+	result[0] =  pil;
 	printf("%f\n", pil);
 }
 
 int main(int argc, char* argv[]){
     time_start();
-    int i, N, *a[333], kol;
+    double pi = 0;
+    int i, N, *a[3], kol;
     if (argc != 3) return 1;
     N = strtol(argv[1], NULL, 10);
     kol = strtol(argv[2], NULL, 10);
@@ -59,6 +57,7 @@ int main(int argc, char* argv[]){
 
     for (i = 0; i < kol; i++){
 	    pthread_join(pth[i], NULL);
+            pi += ((double*)a[i])[0];
 	    free(a[i]);
     }
     printf("%f\n", pi);

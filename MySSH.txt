@@ -1,0 +1,1 @@
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqNoxNyhGh37fO3mIiWabVGkSRpfUmUjG8pkFo7Hj7C andrey_preobrazhensky.05@mail.ru

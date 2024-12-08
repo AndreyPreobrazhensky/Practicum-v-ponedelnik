@@ -1,0 +1,50 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{indentfirst}
+\usepackage{array}
+\usepackage[pdftex]{graphicx}
+
+\title{Задание 9
+
+С помощью MPI реализовать алгоритм SUMMA перемножения матриц.}
+\author{Андрей Преображенский 323 группа}
+\date{08.12.2024}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\section{Постановка задачи}
+Требуется:
+Реализовать параллельный алгоритм SUMMA перемножения матриц для числа процессов, составляющего полный квадрат. Размер сетки N делиться на sqrt(p) * размер блока (B-SIZE). Составить график T(p).
+
+\section{Реализация}
+При реализации распараллеливания будем использовать директивы MPI:
+\begin{enumerate}
+    \item MPI-Comm-split
+    \item MPI-Bcast
+    \item MPI-Wtime
+\end{enumerate}
+Размер транслируемого блока будет определяться как N * B-SIZE / sqrt(p).
+Запуск программ будем производить на системе Polus.
+
+\section{Результаты}
+При фиксированной ширине сетки N = 600 составим график зависимости T(p) - времени работы программы.
+B-SIZE возьмём равным 10.
+Возьмём p = 1, 4, 9, 16
+
+График T(p):
+
+\includegraphics[width=27em, height=22em]{"time9.png"}
+
+
+\section{Выводы}
+
+Программа даёт ускорение при увеличении числа процессов. При подобранном значении блока время на пересылку блоков тратиться меньше, чем на возможное вычисление всей матрицы одним процессом. Алгоритм требует больших допущений в плане размера сетки и числа процессов.
+
+\end{document}
